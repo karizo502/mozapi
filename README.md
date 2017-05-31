@@ -1,4 +1,4 @@
-# mozapi
+# MOZ API
 game moz api
 ## Getting Started
 ```
