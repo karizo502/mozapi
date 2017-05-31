@@ -5,9 +5,9 @@ game moz api
 npm install
 node index.js
 ```
-## Demo
+## Example
 
-Then visit [http://brotherbeborn.eu-1.evennode.com/](http://brotherbeborn.eu-1.evennode.com/)
+[http://brotherbeborn.eu-1.evennode.com/](http://brotherbeborn.eu-1.evennode.com/)
 
 ## License
 
