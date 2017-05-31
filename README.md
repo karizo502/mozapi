@@ -1,3 +1,7 @@
 # mozapi
 game moz api
-init moz
+## Getting Started
+```
+npm install
+node index.js
+```
