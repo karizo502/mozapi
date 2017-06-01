@@ -26,6 +26,11 @@ app.get('/user/:id', function (req, res) {
     var id = req.params.id;
     res.json(users.findById(id));
 });
+
+app.get('/user/:id/avatar', function (req, res) {
+    var id = req.params.id;
+    res.json(users.findAvatarById(id));
+});
  
 app.post('/newuser', function (req, res) {
     var json = req.body;
