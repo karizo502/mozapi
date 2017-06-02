@@ -1,6 +1,10 @@
 /* โหลด Express มาใช้งาน */
-var users = require('./users');
 var app = require('express')();
+var jwt = require("jwt-simple"); 
+var auth = require("./auth.js")();  
+var users = require("./users.js");  
+var users1 = require("./users1.js");  
+var cfg = require("./config.js");  
  
 var bodyParser = require('body-parser');
 
@@ -12,14 +16,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(auth.initialize());
 /* Routing */
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
  
-app.get('/user', function (req, res) {
-    res.json(users.findAll());
+app.get('/user', auth.authenticate() ,function (req, res) {
+    res.json(users1[req.user.id]);
+    //res.json(users.findAll());
 });
  
 app.get('/user/:id', function (req, res) {
@@ -37,6 +43,28 @@ app.post('/newuser', function (req, res) {
     res.send('Add new ' + json.name + ' Completed!');
 });
  
+app.get("/token/:id", function(req, res) {  
+    if (req.params.id) {
+        var id = req.params.id;
+        var user = users1.find(function(u) {
+            return u.id == id;
+        });
+        if (user) {
+            var payload = {
+                id: user.id
+            };
+            var token = jwt.encode(payload, cfg.jwtSecret);
+            res.json({
+                token: token
+            });
+        } else {
+            res.sendStatus(401);
+        }
+    } else {
+        res.sendStatus(401);
+    }
+});
+
 /* สั่งให้ server ทำการรัน Web Server ด้วย port ที่เรากำหนด */
 app.listen(port, function() {
     console.log('Starting node.js on port ' + port);
