@@ -1,6 +1,6 @@
 var passport = require("passport");  
 var passportJWT = require("passport-jwt");  
-var users = require("./users1.js");  
+var users = require("./users.js");  
 var cfg = require("./config.js");  
 var ExtractJwt = passportJWT.ExtractJwt;  
 var Strategy = passportJWT.Strategy;  
@@ -11,7 +11,8 @@ var params = {
 
 module.exports = function() {  
     var strategy = new Strategy(params, function(payload, done) {
-        var user = users[payload.id-1] || null;
+        var user = users.findById(payload.id) || null;
+        console.log(user)
         if (user) {
             return done(null, {
                 id: user.id

@@ -2,8 +2,7 @@
 var app = require('express')();
 var jwt = require("jwt-simple"); 
 var auth = require("./auth.js")();  
-var users = require("./users.js");  
-var users1 = require("./users1.js");  
+var users = require("./users.js");   
 var cfg = require("./config.js");  
  
 var bodyParser = require('body-parser');
@@ -23,9 +22,8 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
  
-app.get('/user', auth.authenticate() ,function (req, res) {
-    res.json(users1[req.user.id]);
-    //res.json(users.findAll());
+app.get('/user' ,function (req, res) {
+    res.json(users.findAll());
 });
  
 app.get('/user/:id', function (req, res) {
@@ -42,13 +40,16 @@ app.post('/newuser', function (req, res) {
     var json = req.body;
     res.send('Add new ' + json.name + ' Completed!');
 });
+
+app.get('/profile', auth.authenticate() ,function (req, res) {
+    res.json(users.findById(req.user.id));
+    //res.json(users.findAll());
+});
  
 app.get("/token/:id", function(req, res) {  
     if (req.params.id) {
         var id = req.params.id;
-        var user = users1.find(function(u) {
-            return u.id == id;
-        });
+        var user = users.findById(id);
         if (user) {
             var payload = {
                 id: user.id
