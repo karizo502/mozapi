@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({
 /* Routing */
 
 app.get('/', function (req, res) {
-    res.send('<h1>Hello Node.js</h1>');
+    res.sendFile(__dirname + '/index.html');
 });
  
 app.get('/user', function (req, res) {
