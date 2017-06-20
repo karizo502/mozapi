@@ -1,6 +1,6 @@
 # MOZ API
 game moz api
-## Getting Started
+## Getting Started2
 ```
 npm install
 node index.js
